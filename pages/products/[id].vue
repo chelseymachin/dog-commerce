@@ -1,5 +1,6 @@
 <script setup>
 import * as marked from "marked";
+import ProductTemperament from "../../components/ProductTemperament";
 const route = useRoute();
 const productStore = useProductStore();
 
@@ -20,6 +21,7 @@ const description = computed(() =>
 );
 
 function handleAddToCart(product) {
+  useCartStore().addProduct(product, 1);
   useAlertsStore().success(product.fields.name + " added to cart");
 }
 </script>
@@ -36,7 +38,7 @@ function handleAddToCart(product) {
           <h1 class="text-2xl">{{ product?.fields.name }}</h1>
           <h2>
             <ProductPrice :price="product.fields.price" />
-            <ProductHeat :heatLevel="product.fields.heatLevel" />
+            <ProductTemperament :temperament="product.fields.temperament" />
           </h2>
           <div class="prose prose-sm">
             <p>{{ product.fields.summary }}</p>
