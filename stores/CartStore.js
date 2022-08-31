@@ -45,6 +45,10 @@ export const useCartStore = defineStore("CartStore", () => {
         return count;
     }
 
+    function reset() {
+        products.value = [];
+    }
+
     // triggers
     // initialize data to cart
     deskree.auth.onAuthStateChange(async () => {
@@ -80,7 +84,9 @@ export const useCartStore = defineStore("CartStore", () => {
         total,
         loading,
         removeProducts,
-        addProduct
+        addProduct,
+        isFirstLoad,
+        reset
     };
 });
 
