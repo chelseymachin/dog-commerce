@@ -2,13 +2,22 @@
 import {useCartStore} from "../stores/CartStore";
 import ProductTemperament from "../components/ProductTemperament";
 import ProductPrice from "../components/ProductPrice";
+import AppButton from "../components/AppButton";
 
 const cartStore = useCartStore();
 const selected = ref([]);
 const checkAll = ref();
+const loading = ref(false);
 
 async function handleCheckout() {
-  console.log("checking out");
+  loading.value = true;
+  const response = await $fetch("/api/cart", {
+    method: "POST",
+    body: {
+      products: cartStore.products
+    }
+  });
+  window.location = response.url;
 }
 </script>
 <template>
@@ -125,9 +134,13 @@ async function handleCheckout() {
               </li>
             </ul>
             <div class="card-actions justify-end w-full">
-              <button class="btn btn-primary w-full" @click="handleCheckout">
+              <AppButton
+                class="btn-primary w-full"
+                @click="handleCheckout"
+                :loading="loading"
+              >
                 Checkout
-              </button>
+              </AppButton>
             </div>
           </div>
         </div>
